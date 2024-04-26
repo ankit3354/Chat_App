@@ -18,8 +18,11 @@ const RegisterPage = () => {
   };
 
   return (
-    <div className="auth--container">
-      <div className="form--wrapper">
+    <div className="auth--container bg-black ">
+      <div className="form--wrapper w-1/2 flex flex-col">
+      <div className="flex  justify-center items-center">
+        <img src="/public/chatlogo.png" alt="logo" width={250} height={250} />
+      </div>
         <form
           onSubmit={(e) => {
             handleResgiter(e, credentials);
@@ -82,6 +85,9 @@ const RegisterPage = () => {
         <p>
           Already have an account <Link to="/login">LogIn</Link>
         </p>
+      </div>
+      <div>
+        <img src="/public/Chat-app.svg" alt="logo" className="hidden lg:block" />
       </div>
     </div>
   );

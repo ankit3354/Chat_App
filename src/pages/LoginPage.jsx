@@ -24,8 +24,11 @@ function LoginPage() {
   };
 
   return (
-    <div className="auth--container">
-      <div className="form--wrapper">
+    <div className="auth--container bg-black">
+      <div className="form--wrapper w-1/2 flex flex-col">
+        <div className="flex  items-center justify-center">
+          <img src="/public/chatlogo.png" alt="logo" width={250} height={250} />
+        </div>
         <form
           onSubmit={(e) => {
             handleUserLogin(e, credentials);
@@ -66,6 +69,13 @@ function LoginPage() {
         <p>
           Don't have an account <Link to="/register">LogIn</Link>
         </p>
+      </div>
+      <div>
+        <img
+          src="/public/Chat-app.svg"
+          alt="logo"
+          className="hidden lg:block"
+        />
       </div>
     </div>
   );
