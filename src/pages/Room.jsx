@@ -39,19 +39,33 @@ function Room() {
         ) {
           console.log("A MESSAGE WAS DELETED !!!");
           setMessage((preState) =>
-            messages.filter((message) => message.$id !== response.payload.$id)
+            preState.filter((message) => message.$id !== response.payload.$id)
           );
         }
       }
     );
+    console.log("unsubscribe:", unsubscribe);
 
     return () => {
       unsubscribe();
     };
   }, []);
 
+  const getMessages = async () => {
+    const response = await databases.listDocuments(
+      DATABASES_ID,
+      COLLECTION_MESSAGE_ID,
+      [Query.orderDesc("$createdAt"), Query.limit(100)]
+    );
+    console.log("Response : ", response);
+    setMessage(response.documents);
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
+    console.log("MESSAGE:", messageBody);
+
+    let permissions = [Permission.write(Role.user(user.$id))];
 
     let payload = {
       user_id: user.$id,
@@ -63,10 +77,9 @@ function Room() {
       DATABASES_ID,
       COLLECTION_MESSAGE_ID,
       ID.unique(),
-      payload
+      payload,
+      permissions
     );
-
-    let permissions = [Permission.write(Role.user(user.$id))];
 
     console.log("Created :", response);
 
@@ -74,18 +87,12 @@ function Room() {
     setMessageBody("");
   };
 
-  const getMessages = async () => {
-    const response = await databases.listDocuments(
+  const handleDelete = async (messageID) => {
+    await databases.deleteDocument(
       DATABASES_ID,
       COLLECTION_MESSAGE_ID,
-      [Query.orderDesc("$createdAt"), Query.limit(4)]
+      messageID
     );
-    console.log("Response : ", response);
-    setMessage(response.documents);
-  };
-
-  const handleDelete = async (messageID) => {
-    databases.deleteDocument(DATABASES_ID, COLLECTION_MESSAGE_ID, messageID);
     // setMessage((preState) =>
     //   messages.filter((message) => message.$id !== messageID)
     // );
@@ -99,7 +106,7 @@ function Room() {
           <div>
             <textarea
               required
-              maxLength={1000}
+              maxLength={250}
               placeholder="Say something..."
               onChange={(e) => setMessageBody(e.target.value)}
               value={messageBody}
@@ -135,11 +142,18 @@ function Room() {
                 ) && (
                   <Trash2
                     className="delete--btn"
-                    onClick={() => handleDelete(message.$id)}
+                    onClick={() => {
+                      handleDelete(message.$id);
+                    }}
                   />
                 )}
               </div>
-              <div className="message--body">
+              <div
+                className={
+                  "message--body " +
+                  (message.user_id === user.$id ? "message--body--owner" : "")
+                }
+              >
                 <span>{message.body}</span>
               </div>
             </div>
