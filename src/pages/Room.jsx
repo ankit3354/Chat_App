@@ -6,7 +6,7 @@ import client, {
 } from "../appwriteConfig";
 import { ID, Permission, Query, Role } from "appwrite";
 import "../index.css";
-import { Trash2 } from "lucide-react";
+import { Trash2 } from "react-feather";
 import Header from "../components/Header";
 import { useAuth } from "../utils/AuthContext";
 
