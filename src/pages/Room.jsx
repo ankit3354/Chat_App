@@ -44,7 +44,6 @@ function Room() {
         }
       }
     );
-    console.log("unsubscribe:", unsubscribe);
 
     return () => {
       unsubscribe();
