@@ -72,7 +72,7 @@ function Room() {
       body: messageBody,
     };
 
-    let response = databases.createDocument(
+    let response = await databases.createDocument(
       DATABASES_ID,
       COLLECTION_MESSAGE_ID,
       ID.unique(),
