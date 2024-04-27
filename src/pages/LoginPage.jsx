@@ -71,11 +71,7 @@ function LoginPage() {
         </p>
       </div>
       <div>
-        <img
-          src="/Chat-app.svg"
-          alt="logo"
-          className="hidden lg:block"
-        />
+        <img src="/Chat-app.svg" alt="logo" className="hidden lg:block" />
       </div>
     </div>
   );
