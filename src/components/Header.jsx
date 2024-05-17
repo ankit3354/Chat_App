@@ -6,14 +6,10 @@ const Header = () => {
   const { user, handleUserLogOut } = useAuth();
   return (
     <div id="header--wrapper">
-      {user ? (
+      {user && (
         <>
           Welcome {user.name}
           <LogOut onClick={handleUserLogOut} className="header--link" />
-        </>
-      ) : (
-        <>
-          <button>Login</button>
         </>
       )}
     </div>

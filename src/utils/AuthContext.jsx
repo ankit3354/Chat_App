@@ -1,6 +1,5 @@
-import React, { useContext } from "react";
-import { createContext, useState, useEffect } from "react";
-import { account, databases } from "../appwriteConfig";
+import React, { useContext, createContext, useState, useEffect } from "react";
+import { account } from "../appwriteConfig";
 import { useNavigate } from "react-router-dom";
 import { ID } from "appwrite";
 
@@ -33,8 +32,10 @@ export const AuthProvider = ({ children }) => {
         credentials.email,
         credentials.password
       );
+      console.log("User Created : ", response);
       const accountDetails = await account.get();
       setUser(accountDetails);
+
       navigate("/");
     } catch (error) {
       console.log("Login error :", error);
